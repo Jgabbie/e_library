@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/login.dart';
+import 'screens/register.dart';
 
 void main() {
   runApp(MyFirstApp()); //runtime
@@ -16,7 +17,10 @@ class MyFirstApp extends StatelessWidget {
 
     return MaterialApp(
       title: "My First Layout App",
-      routes: {"/login": (context) => LoginPage()},
+      routes: {
+        "/login": (context) => LoginPage(),
+        "/register": (context) => RegisterPage(),
+      },
       home: LoginPage(),
       debugShowCheckedModeBanner: false,
     );
