@@ -1,12 +1,15 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'screens/login.dart';
 import 'screens/register.dart';
 import 'screens/splash.dart';
 import 'screens/forgot_password.dart';
 import 'screens/home.dart';
+import 'screens/bookcatalog.dart';
+import 'screens/mylibrary.dart';
 
 void main() {
-  runApp(const MyFirstApp()); 
+  runApp(const MyFirstApp());
 }
 
 class MyFirstApp extends StatelessWidget {
@@ -22,8 +25,10 @@ class MyFirstApp extends StatelessWidget {
         "/splash": (context) => const SplashScreen(),
         "/forgot_password": (context) => const ForgotPasswordPage(),
         "/home": (context) => const HomePage(),
+        "/bookcatalog": (context) => const BookCatalogPage(),
+        "/mylibrary": (context) => const MyLibraryPage(),
       },
-      home: const SplashScreen(), // Changed from LoginPage to SplashScreen
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
