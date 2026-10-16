@@ -7,6 +7,8 @@ import 'screens/forgot_password.dart';
 import 'screens/home.dart';
 import 'screens/bookcatalog.dart';
 import 'screens/mylibrary.dart';
+import 'screens/borrowbook.dart';
+import 'screens/bookreserve.dart';
 
 void main() {
   runApp(const MyFirstApp());
@@ -27,6 +29,8 @@ class MyFirstApp extends StatelessWidget {
         "/home": (context) => const HomePage(),
         "/bookcatalog": (context) => const BookCatalogPage(),
         "/mylibrary": (context) => const MyLibraryPage(),
+        // "/borrowbook": (context) => const BorrowBookPage(),
+        // "/bookreserve": (context) => const BookReservePage(),
       },
       home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
