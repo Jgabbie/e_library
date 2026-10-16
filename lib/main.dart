@@ -7,6 +7,10 @@ import 'screens/forgot_password.dart';
 import 'screens/home.dart';
 import 'screens/bookcatalog.dart';
 import 'screens/mylibrary.dart';
+import 'screens/cart.dart';
+import 'screens/myorders.dart';
+import 'screens/orderdetails.dart';
+import 'data/mock_db.dart';
 
 void main() {
   runApp(const MyFirstApp());
@@ -27,6 +31,10 @@ class MyFirstApp extends StatelessWidget {
         "/home": (context) => const HomePage(),
         "/bookcatalog": (context) => const BookCatalogPage(),
         "/mylibrary": (context) => const MyLibraryPage(),
+        "/cart": (context) => const CartPage(),
+        "/myorders": (context) => const MyOrdersPage(),
+        "/orderdetails": (context) =>
+            OrderDetailsPage(order: MockDatabase.orders.first),
       },
       home: const SplashScreen(),
       debugShowCheckedModeBanner: false,

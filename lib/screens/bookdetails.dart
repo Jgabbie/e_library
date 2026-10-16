@@ -157,10 +157,14 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                 ),
                 onPressed: () {
-
+                  MockDatabase.addToCart(currentBook);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Added to shopping cart.")),
+                  );
+                  Navigator.pushNamed(context, '/cart');
                 },
                 child: const Text(
-                  "Borrow Now",
+                  "Add to Cart",
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),

@@ -43,6 +43,10 @@ class BookCatalogPageState extends State<BookCatalogPage> {
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            onPressed: () => Navigator.pushNamed(context, '/cart'),
+          ),
+          IconButton(
             icon: const Icon(Icons.bookmark),
             onPressed: () {
               Navigator.pushNamed(context, '/mylibrary').then((value) {

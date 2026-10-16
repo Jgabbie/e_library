@@ -125,6 +125,16 @@ class MockDatabase {
   ];
 
   static List<String> bookmarkedBookIds = [];
+  static List<Map<String, dynamic>> cart = [];
+
+  static final List<Map<String, dynamic>> orders = [
+    {
+      "id": "ORD-2026-001",
+      "date": "October 16, 2026",
+      "status": "Borrowed",
+      "items": ["1", "3"],
+    },
+  ];
 
   static bool isBookmarked(String bookId) {
     return bookmarkedBookIds.contains(bookId);
@@ -142,5 +152,30 @@ class MockDatabase {
     return books
         .where((book) => bookmarkedBookIds.contains(book["id"]))
         .toList();
+  }
+
+  static void addToCart(Map<String, dynamic> book) {
+    final existing = cart.where((item) => item["book"]["id"] == book["id"]);
+    if (existing.isEmpty) {
+      cart.add({"book": book, "quantity": 1});
+    } else {
+      existing.first["quantity"]++;
+    }
+  }
+
+  static void updateCartQuantity(String bookId, int quantity) {
+    final index = cart.indexWhere((item) => item["book"]["id"] == bookId);
+    if (index == -1) return;
+    if (quantity <= 0) {
+      cart.removeAt(index);
+    } else {
+      cart[index]["quantity"] = quantity;
+    }
+  }
+
+  static List<Map<String, dynamic>> getOrderBooks(
+      Map<String, dynamic> order) {
+    final ids = List<String>.from(order["items"] as List);
+    return books.where((book) => ids.contains(book["id"])).toList();
   }
 }
