@@ -13,8 +13,14 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String errorMessage = "";
   
-  // Added visibility state
   bool _isObscure = true; 
+
+  // Added clear error logic for the login screen
+  void _clearError(String value) {
+    if (errorMessage.isNotEmpty) {
+      setState(() => errorMessage = "");
+    }
+  }
 
   void _handleLogin() {
     String identifier = _identifierController.text.trim();
@@ -38,19 +44,26 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         actions: const [
           Icon(Icons.person, color: Colors.white),
           Icon(Icons.settings, color: Colors.white),
           Icon(Icons.login, color: Colors.white),
         ],
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.transparent, // Changed to transparent
+        elevation: 0,
         title: const Text("E-Library", style: TextStyle(color: Colors.white)),
         automaticallyImplyLeading: false,
       ),
       body: Container(
-        color: Colors.orange,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/LoginBg.jpg"), // Using the new login image
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken),
+          ),
+        ),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Flex(
@@ -79,16 +92,19 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 10),
                       const Text("Username or Email", style: TextStyle(fontSize: 20)),
                       const SizedBox(height: 8),
-                      TextField(controller: _identifierController),
+                      TextField(
+                        controller: _identifierController,
+                        onChanged: _clearError,
+                      ),
                       const SizedBox(height: 20),
                       
                       const Text("Password", style: TextStyle(fontSize: 20)),
                       const SizedBox(height: 8),
                       
-                      // Added visibility toggle decoration
                       TextField(
                         controller: _passwordController, 
                         obscureText: _isObscure,
+                        onChanged: _clearError,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
