@@ -13,41 +13,75 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     final cart = MockDatabase.cart;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Shopping Cart", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Shopping Cart",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.orange,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: cart.isEmpty
-          ? const Center(child: Text("Your cart is empty.", style: TextStyle(fontSize: 18, color: Colors.grey)))
+          ? const Center(
+              child: Text(
+                "Your cart is empty.",
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+            )
           : Column(
               children: [
                 Expanded(
                   child: ListView.separated(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(24),
                     itemCount: cart.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    separatorBuilder: (_, _) => const SizedBox(height: 16),
                     itemBuilder: (context, index) {
                       final item = cart[index];
                       final book = item["book"] as Map<String, dynamic>;
                       final quantity = item["quantity"] as int;
                       return Card(
+                        elevation: 3,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
                         child: ListTile(
-                          contentPadding: const EdgeInsets.all(10),
-                          leading: Image.network(book["imageUrl"], width: 55, fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => const Icon(Icons.book, color: Colors.orange)),
-                          title: Text(book["title"], maxLines: 2, overflow: TextOverflow.ellipsis),
+                          contentPadding: const EdgeInsets.all(12),
+                          leading: Image.network(
+                            book["imageUrl"],
+                            width: 55,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, _, _) =>
+                                const Icon(Icons.book, color: Colors.orange),
+                          ),
+                          title: Text(
+                            book["title"],
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           subtitle: Row(
                             children: [
-                              IconButton(icon: const Icon(Icons.remove_circle_outline),
-                                  onPressed: () => setState(() => MockDatabase.updateCartQuantity(book["id"], quantity - 1))),
+                              IconButton(
+                                icon: const Icon(Icons.remove_circle_outline),
+                                onPressed: () => setState(() =>
+                                    MockDatabase.updateCartQuantity(
+                                        book["id"], quantity - 1)),
+                              ),
                               Text("$quantity"),
-                              IconButton(icon: const Icon(Icons.add_circle_outline),
-                                  onPressed: () => setState(() => MockDatabase.updateCartQuantity(book["id"], quantity + 1))),
+                              IconButton(
+                                icon: const Icon(Icons.add_circle_outline),
+                                onPressed: () => setState(() =>
+                                    MockDatabase.updateCartQuantity(
+                                        book["id"], quantity + 1)),
+                              ),
                             ],
                           ),
                           trailing: IconButton(
-                            icon: const Icon(Icons.delete_outline, color: Colors.red),
+                            icon: const Icon(
+                              Icons.delete_outline,
+                              color: Colors.red,
+                            ),
                             onPressed: () => setState(() => MockDatabase.updateCartQuantity(book["id"], 0)),
                           ),
                         ),
@@ -56,15 +90,26 @@ class _CartPageState extends State<CartPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, minimumSize: const Size(0, 50),
-                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        minimumSize: const Size(0, 50),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ),
                       onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Borrow request submitted."))),
-                      child: const Text("Borrow Selected Books", style: TextStyle(color: Colors.white, fontSize: 16)),
+                        const SnackBar(
+                          content: Text("Borrow request submitted."),
+                        ),
+                      ),
+                      child: const Text(
+                        "Borrow Selected Books",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
                     ),
                   ),
                 ),

@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
+import 'bookreserve.dart';
+import 'borrowbook.dart';
 
 class BookDetailsPage extends StatefulWidget {
   final Map<String, dynamic> book;
@@ -43,7 +44,10 @@ class BookDetailsPageState extends State<BookDetailsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Book Details", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Book Details",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.orange,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
@@ -79,7 +83,10 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                 children: [
                   Text(
                     currentBook["title"],
-                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -104,7 +111,10 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                           const SizedBox(width: 4),
                           Text(
                             currentBook["rating"].toString(),
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
@@ -129,47 +139,83 @@ class BookDetailsPageState extends State<BookDetailsPage> {
         ),
       ),
 
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(0, 44),
+                    side: const BorderSide(color: Colors.orange),
+                  ),
+                  onPressed: handleBookmarkToggle,
+                  child: Text(
+                    isBookmarked ? "Saved to My Library" : "Save to My Library",
+                    style: const TextStyle(fontSize: 15, color: Colors.orange),
+                  ),
+                ),
+              ),
 
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Expanded(
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(0, 50),
-                  side: const BorderSide(color: Colors.orange),
-                ),
-                onPressed: handleBookmarkToggle,
-                child: Text(
-                  isBookmarked ? "Saved" : "Save",
-                  style: const TextStyle(fontSize: 16, color: Colors.orange),
-                ),
+              const SizedBox(height: 10),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size(0, 50),
+                        foregroundColor: Colors.orange,
+                        side: const BorderSide(color: Colors.orange),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (content) =>
+                                BookReservePage(book: currentBook),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.bookmark_add_outlined),
+                      label: const Text(
+                        "Reserve Book",
+                        style: TextStyle(color: Colors.orange),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        foregroundColor: Colors.white,
+                        minimumSize: const Size(0, 50),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                BorrowBookPage(book: currentBook),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.menu_book),
+                      label: const Text("Borrow Book"),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              flex: 2,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  minimumSize: const Size(0, 50),
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                ),
-                onPressed: () {
-                  MockDatabase.addToCart(currentBook);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Added to shopping cart.")),
-                  );
-                  Navigator.pushNamed(context, '/cart');
-                },
-                child: const Text(
-                  "Add to Cart",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

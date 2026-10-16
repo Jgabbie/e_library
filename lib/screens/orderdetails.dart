@@ -9,6 +9,7 @@ class OrderDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final books = MockDatabase.getOrderBooks(order);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           "Order Details",
@@ -18,7 +19,7 @@ class OrderDetailsPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(24),
         children: [
           Text(
             order["id"],
@@ -30,18 +31,24 @@ class OrderDetailsPage extends StatelessWidget {
             style: const TextStyle(color: Colors.grey),
           ),
           const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.all(14),
+          Card(
+            elevation: 0,
             color: Colors.orange[50],
-            child: Row(
-              children: [
-                const Icon(Icons.check_circle, color: Colors.orange),
-                const SizedBox(width: 10),
-                Text(
-                  "Status: ${order["status"]}",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Row(
+                children: [
+                  const Icon(Icons.check_circle, color: Colors.orange),
+                  const SizedBox(width: 10),
+                  Text(
+                    "Status: ${order["status"]}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -52,15 +59,23 @@ class OrderDetailsPage extends StatelessWidget {
           const SizedBox(height: 8),
           ...books.map(
             (book) => Card(
+              elevation: 3,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
               child: ListTile(
+                contentPadding: const EdgeInsets.all(12),
                 leading: Image.network(
                   book["imageUrl"],
                   width: 50,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) =>
+                  errorBuilder: (context, error, stackTrace) =>
                       const Icon(Icons.book, color: Colors.orange),
                 ),
-                title: Text(book["title"]),
+                title: Text(
+                  book["title"],
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 subtitle: Text("By ${book["author"]}"),
               ),
             ),
