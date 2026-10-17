@@ -166,6 +166,20 @@ class CheckoutPageState extends State<CheckoutPage> {
                   ),
                 ),
                 onPressed: () {
+                  final bookIds = MockDatabase.cart.isNotEmpty
+                      ? MockDatabase.cart
+                            .expand(
+                              (item) => List<String>.filled(
+                                item["quantity"] as int,
+                                (item["book"] as Map<String, dynamic>)["id"]
+                                    .toString(),
+                              ),
+                            )
+                            .toList()
+                      : [widget.book["id"].toString()];
+                  MockDatabase.createOrder(bookIds);
+                  MockDatabase.cart.clear();
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Checkout successful!"),
@@ -176,7 +190,7 @@ class CheckoutPageState extends State<CheckoutPage> {
 
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    '/my-orders',
+                    '/myorders',
                     (route) => route.isFirst,
                   );
                 },
