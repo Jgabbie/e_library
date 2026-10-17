@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
+import 'checkout.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -64,16 +65,22 @@ class _CartPageState extends State<CartPage> {
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.remove_circle_outline),
-                                onPressed: () => setState(() =>
-                                    MockDatabase.updateCartQuantity(
-                                        book["id"], quantity - 1)),
+                                onPressed: () => setState(
+                                  () => MockDatabase.updateCartQuantity(
+                                    book["id"],
+                                    quantity - 1,
+                                  ),
+                                ),
                               ),
                               Text("$quantity"),
                               IconButton(
                                 icon: const Icon(Icons.add_circle_outline),
-                                onPressed: () => setState(() =>
-                                    MockDatabase.updateCartQuantity(
-                                        book["id"], quantity + 1)),
+                                onPressed: () => setState(
+                                  () => MockDatabase.updateCartQuantity(
+                                    book["id"],
+                                    quantity + 1,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -82,7 +89,12 @@ class _CartPageState extends State<CartPage> {
                               Icons.delete_outline,
                               color: Colors.red,
                             ),
-                            onPressed: () => setState(() => MockDatabase.updateCartQuantity(book["id"], 0)),
+                            onPressed: () => setState(
+                              () => MockDatabase.updateCartQuantity(
+                                book["id"],
+                                0,
+                              ),
+                            ),
                           ),
                         ),
                       );
@@ -101,13 +113,30 @@ class _CartPageState extends State<CartPage> {
                           borderRadius: BorderRadius.zero,
                         ),
                       ),
-                      onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Borrow request submitted."),
-                        ),
-                      ),
+                      onPressed: () {
+                        if (MockDatabase.cart.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Your cart is empty."),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                          return;
+                        }
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CheckoutPage(
+                              book: Map<String, dynamic>.from(
+                                MockDatabase.cart.first["book"],
+                              ), // Pass an empty map for the book
+                            ),
+                          ),
+                        );
+                      },
                       child: const Text(
-                        "Borrow Selected Books",
+                        "Proceed to Checkout",
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),

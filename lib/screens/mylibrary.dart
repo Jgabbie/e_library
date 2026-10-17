@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
 import 'bookdetails.dart';
@@ -43,8 +42,11 @@ class MyLibraryPageState extends State<MyLibraryPage> {
                       book["imageUrl"],
                       width: 50,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.book, size: 40, color: Colors.orange),
+                      errorBuilder: (context, error, stackTrace) => const Icon(
+                        Icons.book,
+                        size: 40,
+                        color: Colors.orange,
+                      ),
                     ),
                     title: Text(
                       book["title"],

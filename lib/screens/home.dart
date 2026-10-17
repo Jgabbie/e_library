@@ -9,7 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
   void _confirmLogout() {
     showDialog(
       context: context,
@@ -17,11 +16,18 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Logout"),
         content: const Text("Are you sure you want to logout?"),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
           TextButton(
             onPressed: () {
-              MockDatabase.activeUser = null; 
-              Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              MockDatabase.activeUser = null;
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (route) => false,
+              );
             },
             child: const Text("Logout", style: TextStyle(color: Colors.red)),
           ),
@@ -40,17 +46,27 @@ class _HomePageState extends State<HomePage> {
         title: GestureDetector(
           onTap: () async {
             await Navigator.pushNamed(context, '/profile');
-            setState(() {}); 
+            setState(() {});
           },
           child: Row(
             children: [
               CircleAvatar(
                 backgroundColor: Colors.white,
-                backgroundImage: profileImagePath != null ? AssetImage(profileImagePath) : null,
-                child: profileImagePath == null ? const Icon(Icons.person, color: Colors.orange) : null,
+                backgroundImage: profileImagePath != null
+                    ? AssetImage(profileImagePath)
+                    : null,
+                child: profileImagePath == null
+                    ? const Icon(Icons.person, color: Colors.orange)
+                    : null,
               ),
               const SizedBox(width: 12),
-              Text(username, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              Text(
+                username,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ),
@@ -76,30 +92,66 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 36),
             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, padding: const EdgeInsets.symmetric(vertical: 16), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
               icon: const Icon(Icons.menu_book, color: Colors.white),
-              label: const Text("Browse Book Catalog", style: TextStyle(fontSize: 18, color: Colors.white)),
+              label: const Text(
+                "Browse Book Catalog",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
               onPressed: () => Navigator.pushNamed(context, '/bookcatalog'),
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, padding: const EdgeInsets.symmetric(vertical: 16), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
               icon: const Icon(Icons.shopping_cart, color: Colors.white),
-              label: const Text("Shopping Cart", style: TextStyle(fontSize: 18, color: Colors.white)),
+              label: const Text(
+                "Shopping Cart",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
               onPressed: () => Navigator.pushNamed(context, '/cart'),
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, padding: const EdgeInsets.symmetric(vertical: 16), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
               icon: const Icon(Icons.receipt_long, color: Colors.white),
-              label: const Text("My Orders", style: TextStyle(fontSize: 18, color: Colors.white)),
+              label: const Text(
+                "My Orders",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
               onPressed: () => Navigator.pushNamed(context, '/myorders'),
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, padding: const EdgeInsets.symmetric(vertical: 16), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
               icon: const Icon(Icons.bookmark, color: Colors.white),
-              label: const Text("My Library", style: TextStyle(fontSize: 18, color: Colors.white)),
+              label: const Text(
+                "My Library",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
               onPressed: () => Navigator.pushNamed(context, '/mylibrary'),
             ),
           ],

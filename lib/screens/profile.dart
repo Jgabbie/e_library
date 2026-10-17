@@ -11,14 +11,16 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  
-  final TextEditingController _currentPasswordController = TextEditingController();
+
+  final TextEditingController _currentPasswordController =
+      TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   String usernameError = "";
   String passwordError = "";
-  
+
   bool _isObscureCurrent = true;
   bool _isObscureNew = true;
   bool _isObscureConfirm = true;
@@ -43,7 +45,10 @@ class _ProfilePageState extends State<ProfilePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Choose Profile Picture", textAlign: TextAlign.center),
+        title: const Text(
+          "Choose Profile Picture",
+          textAlign: TextAlign.center,
+        ),
         content: SizedBox(
           width: double.maxFinite,
           height: 250,
@@ -58,9 +63,10 @@ class _ProfilePageState extends State<ProfilePage> {
               return GestureDetector(
                 onTap: () {
                   setState(() {
-                    MockDatabase.activeUser!["profileImage"] = presetAvatars[index];
+                    MockDatabase.activeUser!["profileImage"] =
+                        presetAvatars[index];
                   });
-                  Navigator.pop(context); 
+                  Navigator.pop(context);
                 },
                 child: CircleAvatar(
                   backgroundImage: AssetImage(presetAvatars[index]),
@@ -82,7 +88,10 @@ class _ProfilePageState extends State<ProfilePage> {
               });
               Navigator.pop(context);
             },
-            child: const Text("Remove Picture", style: TextStyle(color: Colors.red)),
+            child: const Text(
+              "Remove Picture",
+              style: TextStyle(color: Colors.red),
+            ),
           ),
         ],
       ),
@@ -91,16 +100,21 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _updateUsername() {
     String newUsername = _usernameController.text.trim();
-    
+
     if (newUsername == MockDatabase.activeUser!["username"]) {
-      setState(() => usernameError = "You can't change your username to your existing username.");
+      setState(
+        () => usernameError =
+            "You can't change your username to your existing username.",
+      );
       return;
     }
     if (newUsername.length < 8 || newUsername.length > 13) {
-      setState(() => usernameError = "Username must be between 8 and 13 characters.");
+      setState(
+        () => usernameError = "Username must be between 8 and 13 characters.",
+      );
       return;
     }
-    
+
     bool isTaken = MockDatabase.users.any((u) => u["username"] == newUsername);
     if (isTaken) {
       setState(() => usernameError = "Username is already taken.");
@@ -111,9 +125,12 @@ class _ProfilePageState extends State<ProfilePage> {
       MockDatabase.activeUser!["username"] = newUsername;
       usernameError = "";
     });
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Username successfully updated!"), backgroundColor: Colors.green),
+      const SnackBar(
+        content: Text("Username successfully updated!"),
+        backgroundColor: Colors.green,
+      ),
     );
   }
 
@@ -131,7 +148,9 @@ class _ProfilePageState extends State<ProfilePage> {
       return;
     }
     if (newPass == current) {
-      setState(() => passwordError = "New password cannot be the same as current.");
+      setState(
+        () => passwordError = "New password cannot be the same as current.",
+      );
       return;
     }
     if (newPass != confirm) {
@@ -139,7 +158,9 @@ class _ProfilePageState extends State<ProfilePage> {
       return;
     }
     if (newPass.length < 8) {
-      setState(() => passwordError = "Password must be at least 8 characters long.");
+      setState(
+        () => passwordError = "Password must be at least 8 characters long.",
+      );
       return;
     }
 
@@ -160,13 +181,16 @@ class _ProfilePageState extends State<ProfilePage> {
         hasLower = true;
       } else if (numbers.contains(char)) {
         hasDigit = true;
-      } else if (char != ' ') { 
+      } else if (char != ' ') {
         hasSpecial = true;
       }
     }
 
     if (!hasUpper || !hasLower || !hasDigit || !hasSpecial) {
-      setState(() => passwordError = "Password needs uppercase, lowercase, number, and special char.");
+      setState(
+        () => passwordError =
+            "Password needs uppercase, lowercase, number, and special char.",
+      );
       return;
     }
 
@@ -179,12 +203,19 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text("Confirm"),
         content: const Text("Are you sure you want to change password?"),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text("No")),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("No"),
+          ),
           TextButton(
             onPressed: () {
               MockDatabase.activeUser!["password"] = newPass;
-              MockDatabase.activeUser = null; 
-              Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              MockDatabase.activeUser = null;
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (route) => false,
+              );
             },
             child: const Text("Yes", style: TextStyle(color: Colors.orange)),
           ),
@@ -198,15 +229,29 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text("Delete Account", style: TextStyle(color: Colors.red)),
-        content: const Text("Are you sure you want to delete your account?\n\nWarning: This is permanent."),
+        title: const Text(
+          "Delete Account",
+          style: TextStyle(color: Colors.red),
+        ),
+        content: const Text(
+          "Are you sure you want to delete your account?\n\nWarning: This is permanent.",
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
           TextButton(
             onPressed: () {
-              MockDatabase.users.removeWhere((u) => u["username"] == MockDatabase.activeUser!["username"]);
+              MockDatabase.users.removeWhere(
+                (u) => u["username"] == MockDatabase.activeUser!["username"],
+              );
               MockDatabase.activeUser = null;
-              Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (route) => false,
+              );
             },
             child: const Text("Yes", style: TextStyle(color: Colors.red)),
           ),
@@ -221,7 +266,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile Settings", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Profile Settings",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.orange,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -232,27 +280,39 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Center(
               child: GestureDetector(
-                onTap: _showAvatarSelector, 
+                onTap: _showAvatarSelector,
                 child: Stack(
                   alignment: Alignment.bottomRight,
                   children: [
                     CircleAvatar(
                       radius: 60,
                       backgroundColor: Colors.grey.shade300,
-                      backgroundImage: profileImagePath != null ? AssetImage(profileImagePath) : null,
-                      child: profileImagePath == null ? const Icon(Icons.person, size: 60, color: Colors.white) : null,
+                      backgroundImage: profileImagePath != null
+                          ? AssetImage(profileImagePath)
+                          : null,
+                      child: profileImagePath == null
+                          ? const Icon(
+                              Icons.person,
+                              size: 60,
+                              color: Colors.white,
+                            )
+                          : null,
                     ),
                     const CircleAvatar(
                       radius: 20,
                       backgroundColor: Colors.orange,
-                      child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 30),
-            
+
             const Text("Email", style: TextStyle(fontWeight: FontWeight.bold)),
             TextField(
               controller: _emailController,
@@ -264,24 +324,34 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 20),
 
-            const Text("Username", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text(
+              "Username",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             TextField(
               controller: _usernameController,
               onChanged: (val) => setState(() => usernameError = ""),
             ),
-            if (usernameError.isNotEmpty) Text(usernameError, style: const TextStyle(color: Colors.red)),
+            if (usernameError.isNotEmpty)
+              Text(usernameError, style: const TextStyle(color: Colors.red)),
             const SizedBox(height: 10),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
               onPressed: _updateUsername,
-              child: const Text("Update Username", style: TextStyle(color: Colors.white)),
+              child: const Text(
+                "Update Username",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-            
+
             const Divider(height: 60, thickness: 2),
 
-            const Text("Change Password", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const Text(
+              "Change Password",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 10),
-            
+
             const Text("Current Password"),
             TextField(
               controller: _currentPasswordController,
@@ -289,8 +359,11 @@ class _ProfilePageState extends State<ProfilePage> {
               onChanged: (val) => setState(() => passwordError = ""),
               decoration: InputDecoration(
                 suffixIcon: IconButton(
-                  icon: Icon(_isObscureCurrent ? Icons.visibility_off : Icons.visibility),
-                  onPressed: () => setState(() => _isObscureCurrent = !_isObscureCurrent),
+                  icon: Icon(
+                    _isObscureCurrent ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () =>
+                      setState(() => _isObscureCurrent = !_isObscureCurrent),
                 ),
               ),
             ),
@@ -303,8 +376,11 @@ class _ProfilePageState extends State<ProfilePage> {
               onChanged: (val) => setState(() => passwordError = ""),
               decoration: InputDecoration(
                 suffixIcon: IconButton(
-                  icon: Icon(_isObscureNew ? Icons.visibility_off : Icons.visibility),
-                  onPressed: () => setState(() => _isObscureNew = !_isObscureNew),
+                  icon: Icon(
+                    _isObscureNew ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () =>
+                      setState(() => _isObscureNew = !_isObscureNew),
                 ),
               ),
             ),
@@ -317,34 +393,46 @@ class _ProfilePageState extends State<ProfilePage> {
               onChanged: (val) => setState(() => passwordError = ""),
               decoration: InputDecoration(
                 suffixIcon: IconButton(
-                  icon: Icon(_isObscureConfirm ? Icons.visibility_off : Icons.visibility),
-                  onPressed: () => setState(() => _isObscureConfirm = !_isObscureConfirm),
+                  icon: Icon(
+                    _isObscureConfirm ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () =>
+                      setState(() => _isObscureConfirm = !_isObscureConfirm),
                 ),
               ),
             ),
-            
-            if (passwordError.isNotEmpty) 
+
+            if (passwordError.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: Text(passwordError, style: const TextStyle(color: Colors.red)),
+                child: Text(
+                  passwordError,
+                  style: const TextStyle(color: Colors.red),
+                ),
               ),
             const SizedBox(height: 10),
 
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
               onPressed: _updatePassword,
-              child: const Text("Update Password", style: TextStyle(color: Colors.white)),
+              child: const Text(
+                "Update Password",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
 
             const Divider(height: 60, thickness: 2),
-            
+
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
               onPressed: _deleteAccount,
-              child: const Text("Delete Account", style: TextStyle(color: Colors.white, fontSize: 16)),
+              child: const Text(
+                "Delete Account",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
             ),
           ],
         ),
