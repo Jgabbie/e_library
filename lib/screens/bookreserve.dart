@@ -20,7 +20,6 @@ class BookReservePageState extends State<BookReservePage> {
   late bool isBookmarked;
   bool isSubmitting = false;
 
-  static const Color primaryOrange = Color(0xFFE87516);
   static const Color paleOrange = Color(0xFFFFF3E8);
 
   @override
@@ -64,7 +63,7 @@ class BookReservePageState extends State<BookReservePage> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
-              primary: primaryOrange,
+              primary: Colors.orange,
               onPrimary: Colors.white,
               surface: Colors.white,
               onSurface: Color(0xFF292929),
@@ -102,7 +101,7 @@ class BookReservePageState extends State<BookReservePage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         icon: const Icon(
           Icons.menu_book_rounded,
-          color: primaryOrange,
+          color: Colors.orange,
           size: 42,
         ),
         title: const Text('Reservation Request Ready'),
@@ -115,11 +114,11 @@ class BookReservePageState extends State<BookReservePage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Close', style: TextStyle(color: primaryOrange)),
+            child: const Text('Close', style: TextStyle(color: Colors.orange)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: primaryOrange,
+              backgroundColor: Colors.orange,
               foregroundColor: Colors.white,
             ),
             onPressed: () {
@@ -185,7 +184,7 @@ class BookReservePageState extends State<BookReservePage> {
                   child: imageUrl.isEmpty
                       ? const Icon(
                           Icons.menu_book_rounded,
-                          color: primaryOrange,
+                          color: Colors.orange,
                           size: 42,
                         )
                       : Image.network(
@@ -193,7 +192,7 @@ class BookReservePageState extends State<BookReservePage> {
                           fit: BoxFit.contain,
                           errorBuilder: (_, _, __) => const Icon(
                             Icons.menu_book_rounded,
-                            color: primaryOrange,
+                            color: Colors.orange,
                             size: 42,
                           ),
                         ),
@@ -206,7 +205,7 @@ class BookReservePageState extends State<BookReservePage> {
                       const Text(
                         'RESERVATION ITEM',
                         style: TextStyle(
-                          color: primaryOrange,
+                          color: Colors.orange,
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1,
@@ -261,7 +260,7 @@ class BookReservePageState extends State<BookReservePage> {
                 border: Border.all(
                   color: reservationDate == null
                       ? const Color(0xFFE2D8D0)
-                      : primaryOrange,
+                      : Colors.orange,
                 ),
               ),
               child: Row(
@@ -274,7 +273,7 @@ class BookReservePageState extends State<BookReservePage> {
                     ),
                     child: const Icon(
                       Icons.calendar_month_outlined,
-                      color: primaryOrange,
+                      color: Colors.orange,
                     ),
                   ),
                   const SizedBox(width: 14),
@@ -288,7 +287,7 @@ class BookReservePageState extends State<BookReservePage> {
                             fontWeight: FontWeight.bold,
                             color: reservationDate == null
                                 ? const Color(0xFF292929)
-                                : primaryOrange,
+                                : Colors.orange,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -301,7 +300,7 @@ class BookReservePageState extends State<BookReservePage> {
                           style: TextStyle(
                             color: reservationDate == null
                                 ? const Color(0xFF292929)
-                                : primaryOrange,
+                                : Colors.orange,
                             fontSize: 14,
                           ),
                         ),
@@ -342,7 +341,7 @@ class BookReservePageState extends State<BookReservePage> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: primaryOrange, width: 1.5),
+                borderSide: const BorderSide(color: Colors.orange, width: 1.5),
               ),
             ),
           ),
@@ -356,7 +355,7 @@ class BookReservePageState extends State<BookReservePage> {
             child: const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.info_outline_rounded, color: primaryOrange),
+                Icon(Icons.info_outline_rounded, color: Colors.orange),
                 SizedBox(width: 10),
                 Expanded(
                   child: Text(
@@ -385,7 +384,7 @@ class BookReservePageState extends State<BookReservePage> {
                 isSubmitting ? 'Submitting...' : 'Submit Reservation Request',
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: primaryOrange,
+                backgroundColor: Colors.orange,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
