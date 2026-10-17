@@ -159,7 +159,7 @@ class BorrowBookPageState extends State<BorrowBookPage> {
       backgroundColor: const Color(0xFFF8F8F8),
       appBar: AppBar(
         title: const Text(
-          "Book Details",
+          "Borrow Book",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         backgroundColor: Colors.orange,
