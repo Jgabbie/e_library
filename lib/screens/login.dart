@@ -47,11 +47,6 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        actions: const [
-          Icon(Icons.person, color: Colors.white),
-          Icon(Icons.settings, color: Colors.white),
-          Icon(Icons.login, color: Colors.white),
-        ],
         backgroundColor: Colors.transparent, // Changed to transparent
         elevation: 0,
         title: const Text(
