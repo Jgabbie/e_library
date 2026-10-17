@@ -142,44 +142,45 @@ class _CartPageState extends State<CartPage> {
                           ),
                         ),
                       ),
-                    ],
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        minimumSize: const Size(0, 50),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      ),
-                      onPressed: () {
-                        if (MockDatabase.cart.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Your cart is empty."),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
-                          return;
-                        }
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CheckoutPage(
-                              book: Map<String, dynamic>.from(
-                                MockDatabase.cart.first["book"],
-                              ), // Pass an empty map for the book
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            minimumSize: const Size(0, 50),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
                             ),
                           ),
-                        );
-                      },
-                      child: const Text(
-                        "Proceed to Checkout",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                          onPressed: () {
+                            if (MockDatabase.cart.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Your cart is empty."),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                              return;
+                            }
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CheckoutPage(
+                                  book: Map<String, dynamic>.from(
+                                    MockDatabase.cart.first["book"],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Proceed to Checkout",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],
