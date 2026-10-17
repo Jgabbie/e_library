@@ -49,7 +49,7 @@ class BorrowBookPageState extends State<BorrowBookPage> {
     );
   }
 
-  void chooseReservationDate() {
+  void chooseReturnDate() {
     final now = DateTime.now();
 
     showDatePicker(
@@ -57,7 +57,7 @@ class BorrowBookPageState extends State<BorrowBookPage> {
       initialDate: returnDate ?? now,
       firstDate: DateTime(now.year, now.month, now.day),
       lastDate: DateTime(now.year + 1, now.month, now.day),
-      helpText: 'Choose reservation date',
+      helpText: 'Choose expected return date',
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -257,7 +257,7 @@ class BorrowBookPageState extends State<BorrowBookPage> {
           ),
           const SizedBox(height: 10),
           InkWell(
-            onTap: chooseReservationDate,
+            onTap: chooseReturnDate,
             borderRadius: BorderRadius.circular(12),
             child: Container(
               padding: const EdgeInsets.all(16),
