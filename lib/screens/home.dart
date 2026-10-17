@@ -1,7 +1,7 @@
+// lib/screens/home.dart
 import 'package:flutter/material.dart';
-import '../data/mock_db.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
@@ -38,9 +38,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    String username = MockDatabase.activeUser?["username"] ?? "User";
-    String? profileImagePath = MockDatabase.activeUser?["profileImage"];
-
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
@@ -72,12 +69,6 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.orange,
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Colors.white),
-            onPressed: _confirmLogout,
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -91,7 +82,16 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 36),
+
+            // Go to Book Catalog
             ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -115,7 +115,18 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.zero,
                 ),
               ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
               icon: const Icon(Icons.shopping_cart, color: Colors.white),
+              label: const Text(
+                "Shopping Cart",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
               label: const Text(
                 "Shopping Cart",
                 style: TextStyle(fontSize: 18, color: Colors.white),
@@ -131,7 +142,18 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.zero,
                 ),
               ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
               icon: const Icon(Icons.receipt_long, color: Colors.white),
+              label: const Text(
+                "My Orders",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
               label: const Text(
                 "My Orders",
                 style: TextStyle(fontSize: 18, color: Colors.white),
@@ -139,7 +161,16 @@ class _HomePageState extends State<HomePage> {
               onPressed: () => Navigator.pushNamed(context, '/myorders'),
             ),
             const SizedBox(height: 16),
+
+            // Go to My Library (Bookmarks)
             ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 padding: const EdgeInsets.symmetric(vertical: 16),

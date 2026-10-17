@@ -61,7 +61,8 @@ class _CartPageState extends State<CartPage> {
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Row(
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.remove_circle_outline),

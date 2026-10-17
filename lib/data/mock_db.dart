@@ -127,14 +127,38 @@ class MockDatabase {
   static List<String> bookmarkedBookIds = [];
   static List<Map<String, dynamic>> cart = [];
 
-  static final List<Map<String, dynamic>> orders = [
-    {
-      "id": "ORD-2026-001",
-      "date": "October 16, 2026",
+  static final List<Map<String, dynamic>> orders = [];
+
+  static void createOrder(List<String> bookIds) {
+    if (bookIds.isEmpty) return;
+
+    final now = DateTime.now();
+    final orderNumber = orders.length + 1;
+    orders.add({
+      "id": "ORD-${now.year}-${orderNumber.toString().padLeft(3, "0")}",
+      "date": "${_monthName(now.month)} ${now.day}, ${now.year}",
       "status": "Borrowed",
-      "items": ["1", "3"],
-    },
-  ];
+      "items": List<String>.from(bookIds),
+    });
+  }
+
+  static String _monthName(int month) {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    return months[month - 1];
+  }
 
   static bool isBookmarked(String bookId) {
     return bookmarkedBookIds.contains(bookId);
@@ -176,6 +200,9 @@ class MockDatabase {
   static List<Map<String, dynamic>> getOrderBooks(
       Map<String, dynamic> order) {
     final ids = List<String>.from(order["items"] as List);
-    return books.where((book) => ids.contains(book["id"])).toList();
+    return ids
+        .map((id) => books.where((book) => book["id"] == id).firstOrNull)
+        .whereType<Map<String, dynamic>>()
+        .toList();
   }
 }

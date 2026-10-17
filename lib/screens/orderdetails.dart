@@ -8,6 +8,18 @@ class OrderDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final books = MockDatabase.getOrderBooks(order);
+    final bookCounts = <String, int>{};
+    for (final book in books) {
+      final id = book["id"].toString();
+      bookCounts[id] = (bookCounts[id] ?? 0) + 1;
+    }
+    final uniqueBooks = <Map<String, dynamic>>[];
+    for (final book in books) {
+      if (!uniqueBooks.any((item) => item["id"] == book["id"])) {
+        uniqueBooks.add(book);
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -57,7 +69,17 @@ class OrderDetailsPage extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          ...books.map(
+          if (books.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 24),
+              child: Center(
+                child: Text(
+                  "No books found for this order.",
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+            ),
+          ...uniqueBooks.map(
             (book) => Card(
               elevation: 3,
               shape: const RoundedRectangleBorder(
@@ -76,10 +98,21 @@ class OrderDetailsPage extends StatelessWidget {
                   book["title"],
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text("By ${book["author"]}"),
+                subtitle: Text(
+                  "By ${book["author"]}\n"
+                  "Quantity: ${bookCounts[book["id"].toString()] ?? 1}",
+                ),
+                isThreeLine: true,
               ),
             ),
           ),
+          if (books.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Text(
+              "Total books: ${books.length}",
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
         ],
       ),
     );
