@@ -1,7 +1,8 @@
 // lib/screens/home.dart
 import 'package:flutter/material.dart';
+import '../data/mock_db.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
@@ -38,6 +39,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final dynamic user = MockDatabase.activeUser;
+
+    final String username = user is Map
+        ? (user["username"] ?? user["email"] ?? "My Profile").toString()
+        : 'My Profile';
+
+    final String? profileImagePath = user is Map
+        ? user["profileImage"]?.toString()
+        : null;
+
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
