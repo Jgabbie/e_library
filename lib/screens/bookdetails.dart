@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
 import 'bookreserve.dart';
@@ -276,7 +275,7 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                           context,
                           MaterialPageRoute(
                             builder: (content) =>
-                                BookReservePage(book: currentBook),
+                                BorrowBookPage(book: currentBook),
                           ),
                         );
                       },
