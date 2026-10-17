@@ -120,7 +120,7 @@ class BorrowBookPageState extends State<BorrowBookPage> {
           'is ready for confirmation. \n\n'
           'Expected return date: '
           '${MaterialLocalizations.of(context).formatMediumDate(returnDate!)}\n\n'
-          'This demo does not save borrowing requests yet.',
+          'Your request will appear in My Orders after confirmation.',
         ),
         actions: [
           TextButton(
@@ -133,6 +133,7 @@ class BorrowBookPageState extends State<BorrowBookPage> {
               foregroundColor: Colors.white,
             ),
             onPressed: () {
+              MockDatabase.createOrder([widget.book["id"].toString()]);
               Navigator.pop(dialogContext);
               Navigator.pop(context);
             },

@@ -60,20 +60,38 @@ class _CartPageState extends State<CartPage> {
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Row(
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              IconButton(
-                                icon: const Icon(Icons.remove_circle_outline),
-                                onPressed: () => setState(() =>
-                                    MockDatabase.updateCartQuantity(
-                                        book["id"], quantity - 1)),
+                              Text(
+                                "By ${book["author"]}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              Text("$quantity"),
-                              IconButton(
-                                icon: const Icon(Icons.add_circle_outline),
-                                onPressed: () => setState(() =>
-                                    MockDatabase.updateCartQuantity(
-                                        book["id"], quantity + 1)),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.remove_circle_outline,
+                                    ),
+                                    onPressed: () => setState(
+                                      () => MockDatabase.updateCartQuantity(
+                                        book["id"],
+                                        quantity - 1,
+                                      ),
+                                    ),
+                                  ),
+                                  Text("Quantity: $quantity"),
+                                  IconButton(
+                                    icon: const Icon(Icons.add_circle_outline),
+                                    onPressed: () => setState(
+                                      () => MockDatabase.updateCartQuantity(
+                                        book["id"],
+                                        quantity + 1,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -82,7 +100,12 @@ class _CartPageState extends State<CartPage> {
                               Icons.delete_outline,
                               color: Colors.red,
                             ),
-                            onPressed: () => setState(() => MockDatabase.updateCartQuantity(book["id"], 0)),
+                            onPressed: () => setState(
+                              () => MockDatabase.updateCartQuantity(
+                                book["id"],
+                                0,
+                              ),
+                            ),
                           ),
                         ),
                       );
@@ -101,11 +124,26 @@ class _CartPageState extends State<CartPage> {
                           borderRadius: BorderRadius.zero,
                         ),
                       ),
-                      onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Borrow request submitted."),
-                        ),
-                      ),
+                      onPressed: () {
+                        final bookIds = cart
+                            .expand(
+                              (item) => List<String>.filled(
+                                item["quantity"] as int,
+                                (item["book"] as Map<String, dynamic>)["id"]
+                                    .toString(),
+                              ),
+                            )
+                            .toList();
+                        MockDatabase.createOrder(bookIds);
+                        setState(() {
+                          MockDatabase.cart.clear();
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Borrow request submitted."),
+                          ),
+                        );
+                      },
                       child: const Text(
                         "Borrow Selected Books",
                         style: TextStyle(color: Colors.white, fontSize: 16),
