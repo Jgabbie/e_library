@@ -54,7 +54,10 @@ class _LoginPageState extends State<LoginPage> {
         ],
         backgroundColor: Colors.transparent, // Changed to transparent
         elevation: 0,
-        title: const Text("E-Library", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Book Central",
+          style: TextStyle(color: Colors.white),
+        ),
         automaticallyImplyLeading: false,
       ),
       body: Container(
@@ -77,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 alignment: Alignment.center,
                 child: const Text(
-                  "Welcome Back to E-Library.",
+                  "Welcome Back to Book Central.",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w800,
