@@ -12,6 +12,7 @@ import 'screens/bookreserve.dart';
 import 'screens/cart.dart';
 import 'screens/myorders.dart';
 import 'screens/orderdetails.dart';
+import 'screens/profile.dart';
 import 'data/mock_db.dart';
 
 void main() {
@@ -31,6 +32,7 @@ class MyFirstApp extends StatelessWidget {
         "/splash": (context) => const SplashScreen(),
         "/forgot_password": (context) => const ForgotPasswordPage(),
         "/home": (context) => const HomePage(),
+        "/profile": (context) => const ProfilePage(),
         "/bookcatalog": (context) => const BookCatalogPage(),
         "/mylibrary": (context) => const MyLibraryPage(),
         // "/borrowbook": (context) => const BorrowBookPage(),
