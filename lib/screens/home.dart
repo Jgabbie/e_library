@@ -80,6 +80,12 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.orange,
         automaticallyImplyLeading: false,
+        actions: [
+      IconButton(
+        icon: const Icon(Icons.logout, color: Colors.white),
+        onPressed: _confirmLogout,
+      ),
+    ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
