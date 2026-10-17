@@ -1,3 +1,4 @@
+// lib/screens/cart.dart
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
 import 'checkout.dart';
@@ -10,9 +11,22 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  double _calculateTotalPrice() {
+    double total = 0.0;
+    for (final item in MockDatabase.cart) {
+      final book = item["book"] as Map<String, dynamic>;
+      final quantity = item["quantity"] as int;
+      final price = (book["price"] ?? 0.0) as num;
+      total += price * quantity;
+    }
+    return total;
+  }
+
   @override
   Widget build(BuildContext context) {
     final cart = MockDatabase.cart;
+    final totalPrice = _calculateTotalPrice();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -34,122 +48,222 @@ class _CartPageState extends State<CartPage> {
               children: [
                 Expanded(
                   child: ListView.separated(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(16),
                     itemCount: cart.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 16),
+                    separatorBuilder: (_, _) => const SizedBox(height: 12),
                     itemBuilder: (context, index) {
                       final item = cart[index];
                       final book = item["book"] as Map<String, dynamic>;
                       final quantity = item["quantity"] as int;
+                      final price = ((book["price"] ?? 0.0) as num).toDouble();
+                      final itemTotal = price * quantity;
+
                       return Card(
                         elevation: 3,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(12),
-                          leading: Image.network(
-                            book["imageUrl"],
-                            width: 55,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, _, _) =>
-                                const Icon(Icons.book, color: Colors.orange),
-                          ),
-                          title: Text(
-                            book["title"],
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Column(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              IconButton(
-                                icon: const Icon(Icons.remove_circle_outline),
-                                onPressed: () => setState(
-                                  () => MockDatabase.updateCartQuantity(
-                                    book["id"],
-                                    quantity - 1,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(6),
+                                child: Image.network(
+                                  book["imageUrl"] ?? '',
+                                  width: 60,
+                                  height: 85,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (_, _, _) => Container(
+                                    width: 60,
+                                    height: 85,
+                                    color: const Color(0xFFFFF3E8),
+                                    child: const Icon(
+                                      Icons.book,
+                                      color: Colors.orange,
+                                    ),
                                   ),
                                 ),
                               ),
-                              Text("$quantity"),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      book["title"] ?? '',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      "By ${book["author"] ?? ''}",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      "₱${price.toStringAsFixed(2)} each",
+                                      style: const TextStyle(
+                                        color: Colors.orange,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.grey.shade300,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              IconButton(
+                                                constraints:
+                                                    const BoxConstraints(
+                                                  minWidth: 32,
+                                                  minHeight: 32,
+                                                ),
+                                                padding: EdgeInsets.zero,
+                                                icon: const Icon(
+                                                  Icons.remove,
+                                                  size: 18,
+                                                ),
+                                                onPressed: () => setState(
+                                                  () => MockDatabase
+                                                      .updateCartQuantity(
+                                                    book["id"],
+                                                    quantity - 1,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 8,
+                                                ),
+                                                child: Text(
+                                                  "$quantity",
+                                                  style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                constraints:
+                                                    const BoxConstraints(
+                                                  minWidth: 32,
+                                                  minHeight: 32,
+                                                ),
+                                                padding: EdgeInsets.zero,
+                                                icon: const Icon(
+                                                  Icons.add,
+                                                  size: 18,
+                                                ),
+                                                onPressed: () => setState(
+                                                  () => MockDatabase
+                                                      .updateCartQuantity(
+                                                    book["id"],
+                                                    quantity + 1,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Text(
+                                          "₱${itemTotal.toStringAsFixed(2)}",
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                               IconButton(
-                                icon: const Icon(Icons.add_circle_outline),
+                                icon: const Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.red,
+                                ),
                                 onPressed: () => setState(
                                   () => MockDatabase.updateCartQuantity(
                                     book["id"],
-                                    quantity + 1,
+                                    0,
                                   ),
                                 ),
                               ),
                             ],
-                          ),
-                          trailing: IconButton(
-                            icon: const Icon(
-                              Icons.delete_outline,
-                              color: Colors.red,
-                            ),
-                            onPressed: () => setState(
-                              () => MockDatabase.updateCartQuantity(
-                                book["id"],
-                                0,
-                              ),
-                            ),
                           ),
                         ),
                       );
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        offset: const Offset(0, -3),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange,
-                            minimumSize: const Size(0, 50),
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Total Amount:",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          onPressed: () {
-                            final bookIds = cart
-                                .expand(
-                                  (item) => List<String>.filled(
-                                    item["quantity"] as int,
-                                    (item["book"] as Map<String, dynamic>)["id"]
-                                        .toString(),
-                                  ),
-                                )
-                                .toList();
-                            MockDatabase.createOrder(bookIds);
-                            setState(() {
-                              MockDatabase.cart.clear();
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Borrow request submitted."),
-                              ),
-                            );
-                          },
-                          child: const Text(
-                            "Borrow Selected Books",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          Text(
+                            "₱${totalPrice.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
+                      const SizedBox(height: 16),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
                             minimumSize: const Size(0, 50),
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                           onPressed: () {
@@ -162,7 +276,6 @@ class _CartPageState extends State<CartPage> {
                               );
                               return;
                             }
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -172,11 +285,15 @@ class _CartPageState extends State<CartPage> {
                                   ),
                                 ),
                               ),
-                            );
+                            ).then((_) => setState(() {}));
                           },
                           child: const Text(
                             "Proceed to Checkout",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
