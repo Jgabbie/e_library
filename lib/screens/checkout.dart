@@ -165,9 +165,23 @@ class CheckoutPageState extends State<CheckoutPage> {
                     borderRadius: BorderRadius.zero,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Checkout successful!"),
+                      backgroundColor: Colors.green,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/my-orders',
+                    (route) => route.isFirst,
+                  );
+                },
                 child: const Text(
-                  "Borrow Now",
+                  "Proceed",
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),

@@ -1,7 +1,12 @@
+
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
 import 'bookreserve.dart';
 import 'borrowbook.dart';
+import 'cart.dart';
+
+//https://docs.flutter.dev/release/breaking-changes/scaffold-messenger
+//https://www.youtube.com/watch?v=oYoz9neJKv8
 
 class BookDetailsPage extends StatefulWidget {
   final Map<String, dynamic> book;
@@ -33,6 +38,45 @@ class BookDetailsPageState extends State<BookDetailsPage> {
           isBookmarked ? "Added to My Library" : "Removed from My Library",
         ),
         duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+
+  void handleAddToCart() {
+    final bookId = widget.book["id"];
+
+    final existingBookInCart = MockDatabase.cart.indexWhere(
+      (item) => item["book"]["id"] == bookId,
+    );
+
+    if (existingBookInCart != -1) {
+      final currentQuantity =
+          MockDatabase.cart[existingBookInCart]["quantity"] as int;
+
+      MockDatabase.updateCartQuantity(bookId, currentQuantity + 1);
+    } else {
+      MockDatabase.cart.add({
+        "book": Map<String, dynamic>.from(widget.book),
+        "quantity": 1,
+      });
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Book added to cart"),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+        action: SnackBarAction(
+          label: "View Cart",
+          textColor: Colors.white,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CartPage()),
+            );
+          },
+        ),
       ),
     );
   }
@@ -75,18 +119,34 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    currentBook["title"],
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          currentBook["title"],
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "₱${((currentBook["price"] ?? 0.0) as num).toStringAsFixed(2)}",
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -94,7 +154,6 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                     style: const TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   const SizedBox(height: 12),
-
                   Row(
                     children: [
                       Chip(
@@ -120,9 +179,7 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                       ),
                     ],
                   ),
-
                   const Divider(height: 30),
-
                   const Text(
                     "Description",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -138,7 +195,6 @@ class BookDetailsPageState extends State<BookDetailsPage> {
           ],
         ),
       ),
-
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -147,9 +203,31 @@ class BookDetailsPageState extends State<BookDetailsPage> {
             children: [
               SizedBox(
                 width: double.infinity,
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(0, 50),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                  onPressed: handleAddToCart,
+                  icon: const Icon(Icons.add_shopping_cart),
+                  label: const Text(
+                    "Add to Cart",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              SizedBox(
+                width: double.infinity,
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    minimumSize: const Size(0, 44),
+                    minimumSize: const Size(0, 50),
                     side: const BorderSide(color: Colors.orange),
                   ),
                   onPressed: handleBookmarkToggle,
@@ -159,9 +237,7 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 10),
-
               Row(
                 children: [
                   Expanded(
@@ -188,28 +264,27 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                     ),
                   ),
                   const SizedBox(width: 12),
-
                   Expanded(
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        foregroundColor: Colors.white,
+                    child: OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
                         minimumSize: const Size(0, 50),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
+                        foregroundColor: Colors.orange,
+                        side: const BorderSide(color: Colors.orange),
                       ),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                BorrowBookPage(book: currentBook),
+                            builder: (content) =>
+                                BookReservePage(book: currentBook),
                           ),
                         );
                       },
-                      icon: const Icon(Icons.menu_book),
-                      label: const Text("Borrow Book"),
+                      icon: const Icon(Icons.menu_book_outlined),
+                      label: const Text(
+                        "Borrow Book",
+                        style: TextStyle(color: Colors.orange),
+                      ),
                     ),
                   ),
                 ],

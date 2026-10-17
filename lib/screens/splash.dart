@@ -12,38 +12,34 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/login'); 
+      Navigator.pushReplacementNamed(context, '/login');
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange, 
+      backgroundColor: Colors.orange,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(flex: 3), 
-            
-            const Icon(
-              Icons.menu_book_rounded, 
-              size: 120,
-              color: Colors.white,
-            ),
-            
-            const Spacer(flex: 2), 
-            
+            const Spacer(flex: 3),
+
+            const Icon(Icons.menu_book_rounded, size: 120, color: Colors.white),
+
+            const Spacer(flex: 2),
+
             // Moved Loader here
             const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
-            
+
             const SizedBox(height: 20),
-            
+
             const Text(
-              "E-Library",
+              "Book Central",
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -51,8 +47,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 letterSpacing: 1.5,
               ),
             ),
-            
-            const Spacer(flex: 1), 
+
+            const Spacer(flex: 1),
           ],
         ),
       ),

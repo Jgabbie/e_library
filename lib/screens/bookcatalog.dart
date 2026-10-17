@@ -29,13 +29,14 @@ class BookCatalogPageState extends State<BookCatalogPage> {
     List<Map<String, dynamic>> filteredBooks = MockDatabase.books.where((book) {
       bool matchesCategory =
           selectedCategory == "All" || book["category"] == selectedCategory;
-      bool matchesSearch =
-          book["title"].toString().toLowerCase().contains(
-            searchQuery.toLowerCase(),
-          ) ||
-          book["author"].toString().toLowerCase().contains(
-            searchQuery.toLowerCase(),
-          );
+      bool matchesSearch = book["title"]
+              .toString()
+              .toLowerCase()
+              .contains(searchQuery.toLowerCase()) ||
+          book["author"]
+              .toString()
+              .toLowerCase()
+              .contains(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     }).toList();
 
@@ -84,7 +85,6 @@ class BookCatalogPageState extends State<BookCatalogPage> {
               ),
             ),
           ),
-
           Container(
             height: 50,
             margin: const EdgeInsets.symmetric(vertical: 8),
@@ -94,7 +94,6 @@ class BookCatalogPageState extends State<BookCatalogPage> {
               itemBuilder: (context, index) {
                 String category = categories[index];
                 bool isSelected = selectedCategory == category;
-
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 6),
                   child: ChoiceChip(
@@ -116,7 +115,6 @@ class BookCatalogPageState extends State<BookCatalogPage> {
               },
             ),
           ),
-
           Expanded(
             child: filteredBooks.isEmpty
                 ? const Center(child: Text("No books found."))
@@ -124,11 +122,11 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                     padding: const EdgeInsets.all(16),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.65,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                        ),
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.60,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                    ),
                     itemCount: filteredBooks.length,
                     itemBuilder: (context, index) {
                       Map<String, dynamic> book = filteredBooks[index];
@@ -163,10 +161,10 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                                         errorBuilder:
                                             (context, error, stackTrace) =>
                                                 const Icon(
-                                                  Icons.book,
-                                                  size: 50,
-                                                  color: Colors.orange,
-                                                ),
+                                          Icons.book,
+                                          size: 50,
+                                          color: Colors.orange,
+                                        ),
                                       ),
                                     ),
                                     Positioned(
@@ -186,8 +184,7 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                                           onPressed: () {
                                             setState(() {
                                               MockDatabase.toggleBookmark(
-                                                book["id"],
-                                              );
+                                                  book["id"]);
                                             });
                                           },
                                         ),
@@ -196,7 +193,6 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                                   ],
                                 ),
                               ),
-
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -207,28 +203,36 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       book["author"],
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 12,
-                                      ),
+                                          color: Colors.grey, fontSize: 12),
                                     ),
-                                    const SizedBox(height: 4),
+                                    const SizedBox(height: 6),
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                          size: 16,
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.star,
+                                                color: Colors.amber, size: 16),
+                                            const SizedBox(width: 4),
+                                            Text(book["rating"].toString()),
+                                          ],
                                         ),
-                                        const SizedBox(width: 4),
-                                        Text(book["rating"].toString()),
+                                        Text(
+                                          "₱${((book["price"] ?? 0.0) as num).toStringAsFixed(2)}",
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.orange,
+                                            fontSize: 13,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ],
