@@ -163,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 alignment: Alignment.center,
                 child: const Text(
-                  "Join E-Library Today.",
+                  "Join Book Central Today.",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w800,
