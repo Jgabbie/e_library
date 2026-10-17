@@ -7,11 +7,11 @@ class CartPage extends StatefulWidget {
   const CartPage({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
+  State<CartPage> createState() => CartPageState();
 }
 
-class _CartPageState extends State<CartPage> {
-  double _calculateTotalPrice() {
+class CartPageState extends State<CartPage> {
+  double calculateTotalPrice() {
     double total = 0.0;
     for (final item in MockDatabase.cart) {
       final book = item["book"] as Map<String, dynamic>;
@@ -25,7 +25,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     final cart = MockDatabase.cart;
-    final totalPrice = _calculateTotalPrice();
+    final totalPrice = calculateTotalPrice();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -129,60 +129,60 @@ class _CartPageState extends State<CartPage> {
                                             border: Border.all(
                                               color: Colors.grey.shade300,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(6),
+                                            borderRadius: BorderRadius.circular(
+                                              6,
+                                            ),
                                           ),
                                           child: Row(
                                             children: [
                                               IconButton(
                                                 constraints:
                                                     const BoxConstraints(
-                                                  minWidth: 32,
-                                                  minHeight: 32,
-                                                ),
+                                                      minWidth: 32,
+                                                      minHeight: 32,
+                                                    ),
                                                 padding: EdgeInsets.zero,
                                                 icon: const Icon(
                                                   Icons.remove,
                                                   size: 18,
                                                 ),
                                                 onPressed: () => setState(
-                                                  () => MockDatabase
-                                                      .updateCartQuantity(
-                                                    book["id"],
-                                                    quantity - 1,
-                                                  ),
+                                                  () =>
+                                                      MockDatabase.updateCartQuantity(
+                                                        book["id"],
+                                                        quantity - 1,
+                                                      ),
                                                 ),
                                               ),
                                               Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                  horizontal: 8,
-                                                ),
+                                                      horizontal: 8,
+                                                    ),
                                                 child: Text(
                                                   "$quantity",
                                                   style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                               ),
                                               IconButton(
                                                 constraints:
                                                     const BoxConstraints(
-                                                  minWidth: 32,
-                                                  minHeight: 32,
-                                                ),
+                                                      minWidth: 32,
+                                                      minHeight: 32,
+                                                    ),
                                                 padding: EdgeInsets.zero,
                                                 icon: const Icon(
                                                   Icons.add,
                                                   size: 18,
                                                 ),
                                                 onPressed: () => setState(
-                                                  () => MockDatabase
-                                                      .updateCartQuantity(
-                                                    book["id"],
-                                                    quantity + 1,
-                                                  ),
+                                                  () =>
+                                                      MockDatabase.updateCartQuantity(
+                                                        book["id"],
+                                                        quantity + 1,
+                                                      ),
                                                 ),
                                               ),
                                             ],

@@ -5,21 +5,21 @@ class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  State<ForgotPasswordPage> createState() => ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
+class ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
       TextEditingController();
   String message = "";
   bool isError = false;
 
-  bool _isObscureNew = true;
-  bool _isObscureConfirm = true;
+  bool isObscureNew = true;
+  bool isObscureConfirm = true;
 
-  void _clearError(String value) {
+  void clearError(String value) {
     if (message.isNotEmpty) {
       setState(() {
         message = "";
@@ -28,10 +28,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     }
   }
 
-  void _handleUpdatePassword() {
-    String email = _emailController.text.trim();
-    String newPassword = _newPasswordController.text;
-    String confirmPassword = _confirmPasswordController.text;
+  void handleUpdatePassword() {
+    String email = emailController.text.trim();
+    String newPassword = newPasswordController.text;
+    String confirmPassword = confirmPasswordController.text;
 
     if (email.isEmpty || newPassword.isEmpty || confirmPassword.isEmpty) {
       setState(() {
@@ -196,8 +196,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     children: [
                       const Text("Enter Email", style: TextStyle(fontSize: 20)),
                       TextField(
-                        controller: _emailController,
-                        onChanged: _clearError,
+                        controller: emailController,
+                        onChanged: clearError,
                       ),
                       const SizedBox(height: 20),
 
@@ -206,18 +206,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         style: TextStyle(fontSize: 20),
                       ),
                       TextField(
-                        controller: _newPasswordController,
-                        obscureText: _isObscureNew,
-                        onChanged: _clearError,
+                        controller: newPasswordController,
+                        obscureText: isObscureNew,
+                        onChanged: clearError,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _isObscureNew
+                              isObscureNew
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                             ),
                             onPressed: () =>
-                                setState(() => _isObscureNew = !_isObscureNew),
+                                setState(() => isObscureNew = !isObscureNew),
                           ),
                         ),
                       ),
@@ -228,18 +228,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         style: TextStyle(fontSize: 20),
                       ),
                       TextField(
-                        controller: _confirmPasswordController,
-                        obscureText: _isObscureConfirm,
-                        onChanged: _clearError,
+                        controller: confirmPasswordController,
+                        obscureText: isObscureConfirm,
+                        onChanged: clearError,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _isObscureConfirm
+                              isObscureConfirm
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                             ),
                             onPressed: () => setState(
-                              () => _isObscureConfirm = !_isObscureConfirm,
+                              () => isObscureConfirm = !isObscureConfirm,
                             ),
                           ),
                         ),
@@ -265,7 +265,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             borderRadius: BorderRadius.zero,
                           ),
                         ),
-                        onPressed: _handleUpdatePassword,
+                        onPressed: handleUpdatePassword,
                         child: const Text(
                           "Update Password",
                           style: TextStyle(fontSize: 24, color: Colors.white),

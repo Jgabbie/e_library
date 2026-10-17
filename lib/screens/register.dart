@@ -5,31 +5,31 @@ class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<RegisterPage> createState() => RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
+class RegisterPageState extends State<RegisterPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
       TextEditingController();
   String errorMessage = "";
 
-  bool _isObscure = true;
-  bool _isObscureConfirm = true;
+  bool isObscure = true;
+  bool isObscureConfirm = true;
 
-  void _clearError(String value) {
+  void clearError(String value) {
     if (errorMessage.isNotEmpty) {
       setState(() => errorMessage = "");
     }
   }
 
   void _handleRegister() {
-    String username = _usernameController.text.trim();
-    String email = _emailController.text.trim();
-    String password = _passwordController.text;
-    String confirmPassword = _confirmPasswordController.text;
+    String username = usernameController.text.trim();
+    String email = emailController.text.trim();
+    String password = passwordController.text;
+    String confirmPassword = confirmPasswordController.text;
 
     if (username.isEmpty ||
         email.isEmpty ||
@@ -190,32 +190,32 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       const Text("Username", style: TextStyle(fontSize: 20)),
                       TextField(
-                        controller: _usernameController,
-                        onChanged: _clearError,
+                        controller: usernameController,
+                        onChanged: clearError,
                       ),
                       const SizedBox(height: 20),
 
                       const Text("Email", style: TextStyle(fontSize: 20)),
                       TextField(
-                        controller: _emailController,
-                        onChanged: _clearError,
+                        controller: emailController,
+                        onChanged: clearError,
                       ),
                       const SizedBox(height: 20),
 
                       const Text("Password", style: TextStyle(fontSize: 20)),
                       TextField(
-                        controller: _passwordController,
-                        obscureText: _isObscure,
-                        onChanged: _clearError,
+                        controller: passwordController,
+                        obscureText: isObscure,
+                        onChanged: clearError,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _isObscure
+                              isObscure
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                             ),
                             onPressed: () =>
-                                setState(() => _isObscure = !_isObscure),
+                                setState(() => isObscure = !isObscure),
                           ),
                         ),
                       ),
@@ -226,18 +226,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: TextStyle(fontSize: 20),
                       ),
                       TextField(
-                        controller: _confirmPasswordController,
-                        obscureText: _isObscureConfirm,
-                        onChanged: _clearError,
+                        controller: confirmPasswordController,
+                        obscureText: isObscureConfirm,
+                        onChanged: clearError,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _isObscureConfirm
+                              isObscureConfirm
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                             ),
                             onPressed: () => setState(
-                              () => _isObscureConfirm = !_isObscureConfirm,
+                              () => isObscureConfirm = !isObscureConfirm,
                             ),
                           ),
                         ),

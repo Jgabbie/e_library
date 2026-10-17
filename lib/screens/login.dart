@@ -5,15 +5,15 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPage> createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _identifierController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class LoginPageState extends State<LoginPage> {
+  final TextEditingController identifierController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   String errorMessage = "";
 
-  bool _isObscure = true;
+  bool isObscure = true;
 
   // Added clear error logic for the login screen
   void _clearError(String value) {
@@ -23,8 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleLogin() {
-    String identifier = _identifierController.text.trim();
-    String password = _passwordController.text;
+    String identifier = identifierController.text.trim();
+    String password = passwordController.text;
 
     if (identifier.isEmpty || password.isEmpty) {
       setState(() => errorMessage = "Please enter both fields.");
@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 8),
                       TextField(
-                        controller: _identifierController,
+                        controller: identifierController,
                         onChanged: _clearError,
                       ),
                       const SizedBox(height: 20),
@@ -116,18 +116,18 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 8),
 
                       TextField(
-                        controller: _passwordController,
-                        obscureText: _isObscure,
+                        controller: passwordController,
+                        obscureText: isObscure,
                         onChanged: _clearError,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _isObscure
+                              isObscure
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                             ),
                             onPressed: () =>
-                                setState(() => _isObscure = !_isObscure),
+                                setState(() => isObscure = !isObscure),
                           ),
                         ),
                       ),

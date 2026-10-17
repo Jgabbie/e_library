@@ -6,11 +6,11 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  void _confirmLogout() {
+class HomePageState extends State<HomePage> {
+  void confirmLogout() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout, color: Colors.white),
-            onPressed: _confirmLogout,
+            onPressed: confirmLogout,
           ),
         ],
       ),

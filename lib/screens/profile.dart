@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
 
+//https://www.youtube.com/watch?v=Ua9Ki1UbUDE
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfilePage> createState() => ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+class ProfilePageState extends State<ProfilePage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
-  final TextEditingController _currentPasswordController =
+  final TextEditingController currentPasswordController =
       TextEditingController();
-  final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
+  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
       TextEditingController();
 
   String usernameError = "";
   String passwordError = "";
 
-  bool _isObscureCurrent = true;
-  bool _isObscureNew = true;
-  bool _isObscureConfirm = true;
+  bool isObscureCurrent = true;
+  bool isObscureNew = true;
+  bool isObscureConfirm = true;
 
   // Your preset Valorant cat images
   final List<String> presetAvatars = [
@@ -37,11 +39,11 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _usernameController.text = MockDatabase.activeUser?["username"] ?? "";
-    _emailController.text = MockDatabase.activeUser?["email"] ?? "";
+    usernameController.text = MockDatabase.activeUser?["username"] ?? "";
+    emailController.text = MockDatabase.activeUser?["email"] ?? "";
   }
 
-  void _showAvatarSelector() {
+  void showAvatarSelector() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -98,8 +100,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void _updateUsername() {
-    String newUsername = _usernameController.text.trim();
+  void updateUsername() {
+    String newUsername = usernameController.text.trim();
 
     if (newUsername == MockDatabase.activeUser!["username"]) {
       setState(
@@ -134,10 +136,10 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void _updatePassword() {
-    String current = _currentPasswordController.text;
-    String newPass = _newPasswordController.text;
-    String confirm = _confirmPasswordController.text;
+  void updatePassword() {
+    String current = currentPasswordController.text;
+    String newPass = newPasswordController.text;
+    String confirm = confirmPasswordController.text;
 
     if (current.isEmpty || newPass.isEmpty || confirm.isEmpty) {
       setState(() => passwordError = "All password fields are required.");
@@ -224,7 +226,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void _deleteAccount() {
+  void deleteAccount() {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -280,7 +282,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Center(
               child: GestureDetector(
-                onTap: _showAvatarSelector,
+                onTap: showAvatarSelector,
                 child: Stack(
                   alignment: Alignment.bottomRight,
                   children: [
@@ -315,7 +317,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
             const Text("Email", style: TextStyle(fontWeight: FontWeight.bold)),
             TextField(
-              controller: _emailController,
+              controller: emailController,
               readOnly: true,
               decoration: InputDecoration(
                 filled: true,
@@ -329,7 +331,7 @@ class _ProfilePageState extends State<ProfilePage> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextField(
-              controller: _usernameController,
+              controller: usernameController,
               onChanged: (val) => setState(() => usernameError = ""),
             ),
             if (usernameError.isNotEmpty)
@@ -337,7 +339,7 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 10),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              onPressed: _updateUsername,
+              onPressed: updateUsername,
               child: const Text(
                 "Update Username",
                 style: TextStyle(color: Colors.white),
@@ -354,16 +356,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
             const Text("Current Password"),
             TextField(
-              controller: _currentPasswordController,
-              obscureText: _isObscureCurrent,
+              controller: currentPasswordController,
+              obscureText: isObscureCurrent,
               onChanged: (val) => setState(() => passwordError = ""),
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isObscureCurrent ? Icons.visibility_off : Icons.visibility,
+                    isObscureCurrent ? Icons.visibility_off : Icons.visibility,
                   ),
                   onPressed: () =>
-                      setState(() => _isObscureCurrent = !_isObscureCurrent),
+                      setState(() => isObscureCurrent = !isObscureCurrent),
                 ),
               ),
             ),
@@ -371,16 +373,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
             const Text("New Password"),
             TextField(
-              controller: _newPasswordController,
-              obscureText: _isObscureNew,
+              controller: newPasswordController,
+              obscureText: isObscureNew,
               onChanged: (val) => setState(() => passwordError = ""),
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isObscureNew ? Icons.visibility_off : Icons.visibility,
+                    isObscureNew ? Icons.visibility_off : Icons.visibility,
                   ),
-                  onPressed: () =>
-                      setState(() => _isObscureNew = !_isObscureNew),
+                  onPressed: () => setState(() => isObscureNew = !isObscureNew),
                 ),
               ),
             ),
@@ -388,16 +389,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
             const Text("Retype New Password"),
             TextField(
-              controller: _confirmPasswordController,
-              obscureText: _isObscureConfirm,
+              controller: confirmPasswordController,
+              obscureText: isObscureConfirm,
               onChanged: (val) => setState(() => passwordError = ""),
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isObscureConfirm ? Icons.visibility_off : Icons.visibility,
+                    isObscureConfirm ? Icons.visibility_off : Icons.visibility,
                   ),
                   onPressed: () =>
-                      setState(() => _isObscureConfirm = !_isObscureConfirm),
+                      setState(() => isObscureConfirm = !isObscureConfirm),
                 ),
               ),
             ),
@@ -414,7 +415,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              onPressed: _updatePassword,
+              onPressed: updatePassword,
               child: const Text(
                 "Update Password",
                 style: TextStyle(color: Colors.white),
@@ -428,7 +429,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 backgroundColor: Colors.red,
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
-              onPressed: _deleteAccount,
+              onPressed: deleteAccount,
               child: const Text(
                 "Delete Account",
                 style: TextStyle(color: Colors.white, fontSize: 16),

@@ -1,15 +1,9 @@
-
 class MockDatabase {
   static List<Map<String, String>> users = [
-    {
-      "username": "admin",
-      "email": "admin@test.com",
-      "password": "123",
-    }
+    {"username": "admin", "email": "admin@test.com", "password": "123"},
   ];
 
   static Map<String, String>? activeUser;
-
 
   static List<Map<String, dynamic>> books = [
     {
@@ -150,22 +144,19 @@ class MockDatabase {
   static List<Map<String, dynamic>> cart = [];
   static final List<Map<String, dynamic>> orders = [];
 
-  static void createOrder(
-    List<String> bookIds, {
-    String status = "Borrowed",
-  }) {
+  static void createOrder(List<String> bookIds, {String status = "Borrowed"}) {
     if (bookIds.isEmpty) return;
     final now = DateTime.now();
     final orderNumber = orders.length + 1;
     orders.add({
       "id": "ORD-${now.year}-${orderNumber.toString().padLeft(3, "0")}",
-      "date": "${_monthName(now.month)} ${now.day}, ${now.year}",
+      "date": "${monthName(now.month)} ${now.day}, ${now.year}",
       "status": status,
       "items": List<String>.from(bookIds),
     });
   }
 
-  static String _monthName(int month) {
+  static String monthName(int month) {
     const months = [
       "January",
       "February",
@@ -220,8 +211,7 @@ class MockDatabase {
     }
   }
 
-  static List<Map<String, dynamic>> getOrderBooks(
-      Map<String, dynamic> order) {
+  static List<Map<String, dynamic>> getOrderBooks(Map<String, dynamic> order) {
     final ids = List<String>.from(order["items"] as List);
     return ids
         .map((id) => books.where((book) => book["id"] == id).firstOrNull)
