@@ -1,4 +1,4 @@
-// lib/data/mock_db.dart
+
 class MockDatabase {
   static List<Map<String, String>> users = [
     {
@@ -10,7 +10,7 @@ class MockDatabase {
 
   static Map<String, String>? activeUser;
 
-  // Updated Book Catalog with the 9 books from the image + 2 classics
+
   static List<Map<String, dynamic>> books = [
     {
       "id": "1",
@@ -18,9 +18,11 @@ class MockDatabase {
       "author": "Alex Michaelides",
       "category": "Thriller",
       "rating": 4.5,
+      "price": 499.00,
       "description":
-          "Alicia Berenson’s life is seemingly perfect. One evening she shoots her husband five times in the face and never speaks another word. Theo Faber is a criminal psychotherapist who has waited a long time for the chance to unravel her motive.",
-      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSuC7RdyqgxQ_C2VozMwpP3u9y19kedr8UN5oQhejvLA&s=10",
+          "Alicia Berenson s life is seemingly perfect. One evening she shoots her husband five times in the face and never speaks another word. Theo Faber is a criminal psychotherapist who has waited a long time for the chance to unravel her motive.",
+      "imageUrl":
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSuC7RdyqgxQ_C2VozMwpP3u9y19kedr8UN5oQhejvLA&s=10",
     },
     {
       "id": "2",
@@ -28,9 +30,11 @@ class MockDatabase {
       "author": "Matt Haig",
       "category": "Fiction",
       "rating": 4.1,
+      "price": 450.00,
       "description":
           "Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived.",
-      "imageUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1602190253i/52578297.jpg",
+      "imageUrl":
+          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1602190253i/52578297.jpg",
     },
     {
       "id": "3",
@@ -38,9 +42,11 @@ class MockDatabase {
       "author": "Rebecca Yarros",
       "category": "Fantasy",
       "rating": 4.6,
+      "price": 750.00,
       "description":
           "Twenty-year-old Violet Sorrengail was supposed to enter the Scribe Quadrant. Instead, she is ordered to join the hundreds of candidates striving to become the elite of Navarre: dragon riders.",
-      "imageUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1701980900i/61431922.jpg",
+      "imageUrl":
+          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1701980900i/61431922.jpg",
     },
     {
       "id": "4",
@@ -48,9 +54,11 @@ class MockDatabase {
       "author": "Taylor Jenkins Reid",
       "category": "Fiction",
       "rating": 4.2,
+      "price": 520.00,
       "description":
           "A gripping novel following the legendary rise and precipitous fall of an iconic 1970s rock band and their beautiful lead singer, revealing the secret behind their split.",
-      "imageUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1580255154i/40597810.jpg",
+      "imageUrl":
+          "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1580255154i/40597810.jpg",
     },
     {
       "id": "5",
@@ -58,9 +66,11 @@ class MockDatabase {
       "author": "V.E. Schwab",
       "category": "Fantasy",
       "rating": 4.2,
+      "price": 580.00,
       "description":
           "France, 1714: In a moment of desperation, a young woman makes a Faustian bargain to live forever, but is cursed to be forgotten by everyone she meets.",
-      "imageUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1584633432i/50623864.jpg",
+      "imageUrl":
+          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1584633432i/50623864.jpg",
     },
     {
       "id": "6",
@@ -68,9 +78,11 @@ class MockDatabase {
       "author": "Ali Hazelwood",
       "category": "Romance",
       "rating": 4.3,
+      "price": 480.00,
       "description":
           "A third-year Ph.D. candidate doesn't believe in lasting romantic relationships, but entering a fake-dating pact with a notoriously strict professor turns into something unexpectedly genuine.",
-      "imageUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1611937942i/56732449.jpg",
+      "imageUrl":
+          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1611937942i/56732449.jpg",
     },
     {
       "id": "7",
@@ -78,9 +90,11 @@ class MockDatabase {
       "author": "Colleen Hoover",
       "category": "Romance",
       "rating": 4.0,
+      "price": 420.00,
       "description":
           "Switching between the perspectives of Lily and Atlas, this heartfelt story continues where the best-selling novel It Ends with Us left off.",
-      "imageUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1644605295i/60393672.jpg",
+      "imageUrl":
+          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1644605295i/60393672.jpg",
     },
     {
       "id": "8",
@@ -88,9 +102,11 @@ class MockDatabase {
       "author": "Lucy Foley",
       "category": "Thriller",
       "rating": 3.9,
+      "price": 490.00,
       "description":
           "A celebrity wedding turns deadly on an isolated island off the windswept coast of Ireland as resentments and petty jealousies collide with tragic consequences.",
-      "imageUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1591461181i/52656911.jpg",
+      "imageUrl":
+          "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1591461181i/52656911.jpg",
     },
     {
       "id": "9",
@@ -98,9 +114,11 @@ class MockDatabase {
       "author": "Holly Jackson",
       "category": "Mystery",
       "rating": 4.4,
+      "price": 510.00,
       "description":
           "Pretty and popular high school senior Andie Bell was murdered by her boyfriend, Sal Singh, who then killed himself. But Pip Fitz-Amobi isn't convinced.",
-      "imageUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1545494980i/40916679.jpg",
+      "imageUrl":
+          "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1545494980i/40916679.jpg",
     },
     {
       "id": "10",
@@ -108,9 +126,11 @@ class MockDatabase {
       "author": "Jane Austen",
       "category": "Classics",
       "rating": 4.8,
+      "price": 350.00,
       "description":
           "The romantic clash between the opinionated Elizabeth Bennet and her proud beau, Mr. Darcy, remains a timeless comedy of manners about love, family, and class distinctions.",
-      "imageUrl": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1681804503i/129915654.jpg",
+      "imageUrl":
+          "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1681804503i/129915654.jpg",
     },
     {
       "id": "11",
@@ -118,20 +138,20 @@ class MockDatabase {
       "author": "Fyodor Dostoevsky",
       "category": "Classics",
       "rating": 4.7,
+      "price": 380.00,
       "description":
           "Rodion Raskolnikov, an impoverished ex-student in Saint Petersburg, formulates and executes a plan to kill an unscrupulous pawnbroker, wrestling with moral guilt and existential dilemmas.",
-      "imageUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1382846449i/7144.jpg",
+      "imageUrl":
+          "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1382846449i/7144.jpg",
     },
   ];
 
   static List<String> bookmarkedBookIds = [];
   static List<Map<String, dynamic>> cart = [];
-
   static final List<Map<String, dynamic>> orders = [];
 
   static void createOrder(List<String> bookIds) {
     if (bookIds.isEmpty) return;
-
     final now = DateTime.now();
     final orderNumber = orders.length + 1;
     orders.add({

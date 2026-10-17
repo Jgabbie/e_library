@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
 import 'bookreserve.dart';
@@ -75,18 +76,34 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    currentBook["title"],
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          currentBook["title"],
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        "₱${((currentBook["price"] ?? 0.0) as num).toStringAsFixed(2)}",
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -94,7 +111,6 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                     style: const TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   const SizedBox(height: 12),
-
                   Row(
                     children: [
                       Chip(
@@ -120,9 +136,7 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                       ),
                     ],
                   ),
-
                   const Divider(height: 30),
-
                   const Text(
                     "Description",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -138,7 +152,6 @@ class BookDetailsPageState extends State<BookDetailsPage> {
           ],
         ),
       ),
-
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -159,9 +172,7 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 10),
-
               Row(
                 children: [
                   Expanded(
@@ -188,7 +199,6 @@ class BookDetailsPageState extends State<BookDetailsPage> {
                     ),
                   ),
                   const SizedBox(width: 12),
-
                   Expanded(
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
