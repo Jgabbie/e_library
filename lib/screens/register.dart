@@ -12,11 +12,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   String errorMessage = "";
-  
+
   bool _isObscure = true;
-  bool _isObscureConfirm = true; 
+  bool _isObscureConfirm = true;
 
   void _clearError(String value) {
     if (errorMessage.isNotEmpty) {
@@ -30,7 +31,10 @@ class _RegisterPageState extends State<RegisterPage> {
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
 
-    if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+    if (username.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty) {
       setState(() => errorMessage = "All fields are required.");
       return;
     }
@@ -41,7 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     if (username.length < 8 || username.length > 13) {
-      setState(() => errorMessage = "Username must be between 8 and 13 characters.");
+      setState(
+        () => errorMessage = "Username must be between 8 and 13 characters.",
+      );
       return;
     }
 
@@ -51,7 +57,9 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     if (password.length < 8) {
-      setState(() => errorMessage = "Password must be at least 8 characters long.");
+      setState(
+        () => errorMessage = "Password must be at least 8 characters long.",
+      );
       return;
     }
 
@@ -72,13 +80,16 @@ class _RegisterPageState extends State<RegisterPage> {
         hasLower = true;
       } else if (numbers.contains(char)) {
         hasDigit = true;
-      } else if (char != ' ') { 
+      } else if (char != ' ') {
         hasSpecial = true;
       }
     }
 
     if (!hasUpper || !hasLower || !hasDigit || !hasSpecial) {
-      setState(() => errorMessage = "Password needs uppercase, lowercase, number, and special char.");
+      setState(
+        () => errorMessage =
+            "Password needs uppercase, lowercase, number, and special char.",
+      );
       return;
     }
 
@@ -99,18 +110,24 @@ class _RegisterPageState extends State<RegisterPage> {
 
     showDialog(
       context: context,
-      barrierDismissible: false, 
+      barrierDismissible: false,
       builder: (context) => const AlertDialog(
         backgroundColor: Colors.white,
-        title: Text("Success", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
-        content: Text("Account successfully created! Redirecting to login...", style: TextStyle(fontSize: 16)),
+        title: Text(
+          "Success",
+          style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          "Account successfully created! Redirecting to login...",
+          style: TextStyle(fontSize: 16),
+        ),
       ),
     );
 
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
-        Navigator.pop(context); 
-        Navigator.pop(context); 
+        Navigator.pop(context);
+        Navigator.pop(context);
       }
     });
   }
@@ -118,21 +135,23 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      extendBodyBehindAppBar: true, 
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Removed solid orange
         elevation: 0, // Removes shadow
-        title: const Text("Create Account", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Create Account",
+          style: TextStyle(color: Colors.white),
+        ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      
+
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/RegisBg.jpg"),
             fit: BoxFit.cover,
-            
+
             colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken),
           ),
         ),
@@ -140,10 +159,17 @@ class _RegisterPageState extends State<RegisterPage> {
           direction: Axis.vertical,
           children: [
             Expanded(
-              flex: 25, 
+              flex: 25,
               child: Container(
                 alignment: Alignment.center,
-                child: const Text("Join E-Library Today.", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800, color: Colors.white)),
+                child: const Text(
+                  "Join E-Library Today.",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
             Expanded(
@@ -151,7 +177,10 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
                 ),
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.all(30),
@@ -162,48 +191,64 @@ class _RegisterPageState extends State<RegisterPage> {
                       const Text("Username", style: TextStyle(fontSize: 20)),
                       TextField(
                         controller: _usernameController,
-                        onChanged: _clearError, 
+                        onChanged: _clearError,
                       ),
                       const SizedBox(height: 20),
-                      
+
                       const Text("Email", style: TextStyle(fontSize: 20)),
                       TextField(
                         controller: _emailController,
-                        onChanged: _clearError, 
+                        onChanged: _clearError,
                       ),
                       const SizedBox(height: 20),
 
                       const Text("Password", style: TextStyle(fontSize: 20)),
                       TextField(
-                        controller: _passwordController, 
+                        controller: _passwordController,
                         obscureText: _isObscure,
-                        onChanged: _clearError, 
+                        onChanged: _clearError,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
-                            icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
-                            onPressed: () => setState(() => _isObscure = !_isObscure),
+                            icon: Icon(
+                              _isObscure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: () =>
+                                setState(() => _isObscure = !_isObscure),
                           ),
                         ),
                       ),
                       const SizedBox(height: 20),
 
-                      
-                      const Text("Retype Password", style: TextStyle(fontSize: 20)),
+                      const Text(
+                        "Retype Password",
+                        style: TextStyle(fontSize: 20),
+                      ),
                       TextField(
-                        controller: _confirmPasswordController, 
+                        controller: _confirmPasswordController,
                         obscureText: _isObscureConfirm,
-                        onChanged: _clearError, 
+                        onChanged: _clearError,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
-                            icon: Icon(_isObscureConfirm ? Icons.visibility_off : Icons.visibility),
-                            onPressed: () => setState(() => _isObscureConfirm = !_isObscureConfirm),
+                            icon: Icon(
+                              _isObscureConfirm
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: () => setState(
+                              () => _isObscureConfirm = !_isObscureConfirm,
+                            ),
                           ),
                         ),
                       ),
                       const SizedBox(height: 10),
 
                       if (errorMessage.isNotEmpty)
-                        Text(errorMessage, style: const TextStyle(color: Colors.red)),
+                        Text(
+                          errorMessage,
+                          style: const TextStyle(color: Colors.red),
+                        ),
 
                       const SizedBox(height: 30),
 
@@ -211,20 +256,39 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: ElevatedButton.styleFrom(
                           fixedSize: const Size(400, 60),
                           backgroundColor: Colors.orange,
-                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero,
+                          ),
                         ),
                         onPressed: _handleRegister,
-                        child: const Text("Sign Up", style: TextStyle(fontSize: 24, color: Colors.white)),
+                        child: const Text(
+                          "Sign Up",
+                          style: TextStyle(fontSize: 24, color: Colors.white),
+                        ),
                       ),
                       const SizedBox(height: 30),
-                      
+
                       Center(
                         child: Column(
                           children: [
-                            const Text("Already have an account?", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.grey)),
+                            const Text(
+                              "Already have an account?",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.grey,
+                              ),
+                            ),
                             GestureDetector(
                               onTap: () => Navigator.pop(context),
-                              child: const Text("Login Here", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Colors.orange)),
+                              child: const Text(
+                                "Login Here",
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.orange,
+                                ),
+                              ),
                             ),
                           ],
                         ),

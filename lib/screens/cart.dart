@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
+import 'checkout.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -63,35 +64,24 @@ class _CartPageState extends State<CartPage> {
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "By ${book["author"]}",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                              IconButton(
+                                icon: const Icon(Icons.remove_circle_outline),
+                                onPressed: () => setState(
+                                  () => MockDatabase.updateCartQuantity(
+                                    book["id"],
+                                    quantity - 1,
+                                  ),
+                                ),
                               ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.remove_circle_outline,
-                                    ),
-                                    onPressed: () => setState(
-                                      () => MockDatabase.updateCartQuantity(
-                                        book["id"],
-                                        quantity - 1,
-                                      ),
-                                    ),
+                              Text("$quantity"),
+                              IconButton(
+                                icon: const Icon(Icons.add_circle_outline),
+                                onPressed: () => setState(
+                                  () => MockDatabase.updateCartQuantity(
+                                    book["id"],
+                                    quantity + 1,
                                   ),
-                                  Text("Quantity: $quantity"),
-                                  IconButton(
-                                    icon: const Icon(Icons.add_circle_outline),
-                                    onPressed: () => setState(
-                                      () => MockDatabase.updateCartQuantity(
-                                        book["id"],
-                                        quantity + 1,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ],
                           ),
@@ -125,27 +115,29 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
                       onPressed: () {
-                        final bookIds = cart
-                            .expand(
-                              (item) => List<String>.filled(
-                                item["quantity"] as int,
-                                (item["book"] as Map<String, dynamic>)["id"]
-                                    .toString(),
-                              ),
-                            )
-                            .toList();
-                        MockDatabase.createOrder(bookIds);
-                        setState(() {
-                          MockDatabase.cart.clear();
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Borrow request submitted."),
+                        if (MockDatabase.cart.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Your cart is empty."),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                          return;
+                        }
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CheckoutPage(
+                              book: Map<String, dynamic>.from(
+                                MockDatabase.cart.first["book"],
+                              ), // Pass an empty map for the book
+                            ),
                           ),
                         );
                       },
                       child: const Text(
-                        "Borrow Selected Books",
+                        "Proceed to Checkout",
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
