@@ -150,14 +150,17 @@ class MockDatabase {
   static List<Map<String, dynamic>> cart = [];
   static final List<Map<String, dynamic>> orders = [];
 
-  static void createOrder(List<String> bookIds) {
+  static void createOrder(
+    List<String> bookIds, {
+    String status = "Borrowed",
+  }) {
     if (bookIds.isEmpty) return;
     final now = DateTime.now();
     final orderNumber = orders.length + 1;
     orders.add({
       "id": "ORD-${now.year}-${orderNumber.toString().padLeft(3, "0")}",
       "date": "${_monthName(now.month)} ${now.day}, ${now.year}",
-      "status": "Borrowed",
+      "status": status,
       "items": List<String>.from(bookIds),
     });
   }

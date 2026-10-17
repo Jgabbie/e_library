@@ -177,7 +177,7 @@ class CheckoutPageState extends State<CheckoutPage> {
                             )
                             .toList()
                       : [widget.book["id"].toString()];
-                  MockDatabase.createOrder(bookIds);
+                  MockDatabase.createOrder(bookIds, status: "Purchased");
                   MockDatabase.cart.clear();
 
                   ScaffoldMessenger.of(context).showSnackBar(
