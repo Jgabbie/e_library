@@ -114,41 +114,45 @@ class _CartPageState extends State<CartPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        minimumSize: const Size(0, 50),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            minimumSize: const Size(0, 50),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                            ),
+                          ),
+                          onPressed: () {
+                            final bookIds = cart
+                                .expand(
+                                  (item) => List<String>.filled(
+                                    item["quantity"] as int,
+                                    (item["book"] as Map<String, dynamic>)["id"]
+                                        .toString(),
+                                  ),
+                                )
+                                .toList();
+                            MockDatabase.createOrder(bookIds);
+                            setState(() {
+                              MockDatabase.cart.clear();
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Borrow request submitted."),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Borrow Selected Books",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
                         ),
                       ),
-                      onPressed: () {
-                        final bookIds = cart
-                            .expand(
-                              (item) => List<String>.filled(
-                                item["quantity"] as int,
-                                (item["book"] as Map<String, dynamic>)["id"]
-                                    .toString(),
-                              ),
-                            )
-                            .toList();
-                        MockDatabase.createOrder(bookIds);
-                        setState(() {
-                          MockDatabase.cart.clear();
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Borrow request submitted."),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "Borrow Selected Books",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
+                    ],
                   ),
                 ),
               ],

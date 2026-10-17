@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../data/mock_db.dart';
 import 'bookdetails.dart';
@@ -27,18 +26,26 @@ class BookCatalogPageState extends State<BookCatalogPage> {
 
   @override
   Widget build(BuildContext context) {
-
     List<Map<String, dynamic>> filteredBooks = MockDatabase.books.where((book) {
-      bool matchesCategory = selectedCategory == "All" || book["category"] == selectedCategory;
-      bool matchesSearch = book["title"].toString().toLowerCase().contains(searchQuery.toLowerCase()) ||
-          book["author"].toString().toLowerCase().contains(searchQuery.toLowerCase());
+      bool matchesCategory =
+          selectedCategory == "All" || book["category"] == selectedCategory;
+      bool matchesSearch =
+          book["title"].toString().toLowerCase().contains(
+            searchQuery.toLowerCase(),
+          ) ||
+          book["author"].toString().toLowerCase().contains(
+            searchQuery.toLowerCase(),
+          );
       return matchesCategory && matchesSearch;
     }).toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Book Catalog", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Book Catalog",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.orange,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
@@ -58,7 +65,6 @@ class BookCatalogPageState extends State<BookCatalogPage> {
       ),
       body: Column(
         children: [
-
           Container(
             color: Colors.orange,
             padding: const EdgeInsets.all(16),
@@ -78,7 +84,6 @@ class BookCatalogPageState extends State<BookCatalogPage> {
               ),
             ),
           ),
-
 
           Container(
             height: 50,
@@ -117,12 +122,13 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                 ? const Center(child: Text("No books found."))
                 : GridView.builder(
                     padding: const EdgeInsets.all(16),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.65,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.65,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
                     itemCount: filteredBooks.length,
                     itemBuilder: (context, index) {
                       Map<String, dynamic> book = filteredBooks[index];
@@ -135,7 +141,8 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => BookDetailsPage(book: book),
+                                builder: (context) =>
+                                    BookDetailsPage(book: book),
                               ),
                             ).then((value) {
                               setState(() {});
@@ -144,7 +151,6 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-
                               Expanded(
                                 child: Stack(
                                   children: [
@@ -154,8 +160,13 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                                       child: Image.network(
                                         book["imageUrl"],
                                         fit: BoxFit.cover,
-                                        errorBuilder: (context, error, stackTrace) =>
-                                            const Icon(Icons.book, size: 50, color: Colors.orange),
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                const Icon(
+                                                  Icons.book,
+                                                  size: 50,
+                                                  color: Colors.orange,
+                                                ),
                                       ),
                                     ),
                                     Positioned(
@@ -167,12 +178,16 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                                         child: IconButton(
                                           padding: EdgeInsets.zero,
                                           icon: Icon(
-                                            isSaved ? Icons.bookmark : Icons.bookmark_border,
+                                            isSaved
+                                                ? Icons.bookmark
+                                                : Icons.bookmark_border,
                                             color: Colors.orange,
                                           ),
                                           onPressed: () {
                                             setState(() {
-                                              MockDatabase.toggleBookmark(book["id"]);
+                                              MockDatabase.toggleBookmark(
+                                                book["id"],
+                                              );
                                             });
                                           },
                                         ),
@@ -191,18 +206,27 @@ class BookCatalogPageState extends State<BookCatalogPage> {
                                       book["title"],
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                     Text(
                                       book["author"],
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                      ),
                                     ),
                                     const SizedBox(height: 4),
                                     Row(
                                       children: [
-                                        const Icon(Icons.star, color: Colors.amber, size: 16),
+                                        const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                          size: 16,
+                                        ),
                                         const SizedBox(width: 4),
                                         Text(book["rating"].toString()),
                                       ],
