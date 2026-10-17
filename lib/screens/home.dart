@@ -92,13 +92,6 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.zero,
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
               icon: const Icon(Icons.menu_book, color: Colors.white),
               label: const Text(
                 "Browse Book Catalog",
@@ -115,18 +108,8 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.zero,
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
+
               icon: const Icon(Icons.shopping_cart, color: Colors.white),
-              label: const Text(
-                "Shopping Cart",
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
               label: const Text(
                 "Shopping Cart",
                 style: TextStyle(fontSize: 18, color: Colors.white),
@@ -142,18 +125,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.zero,
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
               icon: const Icon(Icons.receipt_long, color: Colors.white),
-              label: const Text(
-                "My Orders",
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
               label: const Text(
                 "My Orders",
                 style: TextStyle(fontSize: 18, color: Colors.white),
@@ -164,13 +136,6 @@ class _HomePageState extends State<HomePage> {
 
             // Go to My Library (Bookmarks)
             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 padding: const EdgeInsets.symmetric(vertical: 16),
